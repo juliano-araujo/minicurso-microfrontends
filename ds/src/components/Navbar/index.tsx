@@ -1,15 +1,33 @@
-import "./styles.css"
+import './styles.css';
 
-export function Navbar() {
+interface MapRoute {
+  routeName: string;
+  routePath: string;
+  onClickAction: () => void;
+}
+
+interface NavbarProps {
+  mapRoutes: MapRoute[];
+}
+
+export function Navbar({ mapRoutes }: NavbarProps) {
   return (
     <header className="d-flex justify-content-center py-3">
       <ul className="nav nav-pills">
-        <li className="nav-item">
-          <a className="nav-link active">Rota 1</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link ">Rota 2</a>
-        </li>
+        {mapRoutes.map((route) => (
+          <li key={route.routeName} className="nav-item">
+            <a
+              className={
+                route.routePath === window.location.pathname
+                  ? 'nav-link active'
+                  : 'nav-link'
+              }
+              onClick={route.onClickAction}
+            >
+              {route.routeName}
+            </a>
+          </li>
+        ))}
       </ul>
     </header>
   );
